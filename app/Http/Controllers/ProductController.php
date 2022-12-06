@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Exists;
@@ -40,7 +41,16 @@ class ProductController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect('/dashboard');
         }
-        $product = ['Jeans','Hoodie','Jacket','Polo Shirt'];
+        $product = [
+            'Hem Pendek',
+            'Hem Panjang',
+            'Celana Pendek',
+            'Celana Panjang',
+            'Rok Plisir',
+            'Rok TP',
+            'Celana Kempol',
+            'Hem Pramuka'
+        ];
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
@@ -147,5 +157,24 @@ class ProductController extends Controller
         
         Product::destroy($product->id);
         return redirect(route('products.index'));
+    }
+
+    public function indexcetak()
+    {
+        return view('index', [
+            'products' => Product::all()
+        ]);
+        // return view('$_COOKIE', [
+        //                 'dataKaryawan' => Karyawan::get()
+        //             ]);
+    }
+
+    public function exportpdf()
+    {
+        $data = Product::all();
+        
+        $pdf = PDF::loadView('cetak',['data' => $data]);
+        return $pdf->download('user.pdf');
+        # code...
     }
 }

@@ -79,3 +79,8 @@ Route::get('/laporan-keluar', function (){ // HALAMAN LAPORAN KELUAR
 });
 
 Route::resource('supplier', SupplierController::class);
+
+Route::get('/data', [ProductController::class, 'indexcetak']);
+Route::get('/export/cetak_pdf', [ProductController::class, 'exportpdf']);
+
+// Route::get('/export', [ProductController::class,'exportpdf']);
