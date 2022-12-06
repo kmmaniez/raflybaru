@@ -61,6 +61,9 @@ Route::prefix('barang-keluar')->group(function () {
 });
 
 Route::get('/laporan-masuk',[BarangController::class, 'filterByDate'] );
+Route::post('/export-pdf', [BarangController::class, 'exportToPDF']);
+Route::get('/export-pdf', [BarangController::class, 'exportpdf']);
+
 Route::post('/laporan-masuk',[BarangController::class, 'filterByDate'] );
 // Route::post('/laporan-masuk', function(Request $request){
 //     dd($request);
@@ -80,7 +83,6 @@ Route::get('/laporan-keluar', function (){ // HALAMAN LAPORAN KELUAR
 
 Route::resource('supplier', SupplierController::class);
 
-Route::get('/data', [ProductController::class, 'indexcetak']);
-Route::get('/export/cetak_pdf', [ProductController::class, 'exportpdf']);
+
 
 // Route::get('/export', [ProductController::class,'exportpdf']);

@@ -26,7 +26,7 @@
                                 <th>Warna</th>
                                 <th>Ukuran</th>
                                 <th>Stok</th>
-                                <th>Aksi</th>
+                                {{-- <th>Aksi</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -38,14 +38,14 @@
                                 <td>{{ $data->warna }}</td>
                                 <td>{{ $data->ukuran }}</td>
                                 <td>{{ $data->stok }}</td>
-                                <td>
+                                {{-- <td>
                                     <form action="/products/{{ $data->id }}" method="post">
                                         @csrf
                                         @method('delete')
                                         <a class="btn btn-sm btn-primary" href="{{ route('products.edit', $data) }}">Edit</a>
                                         <button class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangKeluar;
 use App\Models\BarangMasuk;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,6 @@ class BarangController extends Controller
         $brg = DB::table('barang_masuk')
             ->whereBetween('tgl_masuk',['2022-11-20','2022-11-29'])->get();
         // echo $brg->product->nama_produk;
-        // dd($brg);
-
         return view('admin.barang-masuk.index',[
             'title'         => 'Data Stok Barang Masuk',
             'barangmasuk'   => BarangMasuk::all()
@@ -40,15 +39,25 @@ class BarangController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->back();
         }
-        
+        $product = [
+            'Hem Pendek',
+            'Hem Panjang',
+            'Celana Pendek',
+            'Celana Panjang',
+            'Rok Plisir',
+            'Rok TP',
+            'Celana Kempol',
+            'Hem Pramuka'
+        ];
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
         }
+        
         return view('admin.barang-masuk.create-brg-masuk', [
             'title'         => 'Tambah Barang Masuk',
-            'products'      => Product::all(),
+            'products'      => $product,
             'supplier'      => Supplier::all(),
             'listukuran'    => $ukuran,
             'listwarna'     => $warna
@@ -207,20 +216,54 @@ class BarangController extends Controller
     }
 
     public function filterByDate(Request $request)
-    {
+    { 
+        $startDate  = $request->input('start');
+        $endDate    = $request->input('end');
+
         if ($request->post()) {
             $hasilFilter = BarangMasuk::query()
-                ->where('tgl_masuk','>=', $request->input('start'))
-                ->where('tgl_masuk','<=', $request->input('end'))
+                ->where('tgl_masuk','>=', $startDate)
+                ->where('tgl_masuk','<=', $endDate)
                 ->get();
             return view('admin.laporan-masuk.index',[
                 'title'         => 'Laporan Barang Masuk',
-                'lapmasuk'      => $hasilFilter
+                'lapmasuk'      => $hasilFilter,
+                'status'        => true,
+                'startdate'     => $startDate,
+                'enddate'       => $endDate
             ]);
         }
         return view('admin.laporan-masuk.index',[
             'title'         => 'Laporan Barang Masuk',
+            'status'        => false,
+            'startdate'     => $startDate,
+            'enddate'       => $endDate,
             'lapmasuk'      => BarangMasuk::all()
         ]);
+    }
+
+    public function exportToPDF(Request $request)
+    {
+        if($request->is_null) return redirect('/products');
+        // dd($request);
+        $startDate      = $request->input('startdate');
+        $endDate        = $request->input('enddate');
+        $hasilFilter    = BarangMasuk::query()
+                            ->where('tgl_masuk','>=', '2022-12-06')
+                            ->where('tgl_masuk','<=', '2022-12-09')
+                            ->get();
+        $pdf    = PDF::loadView('cetak-laporan',[
+            'data'  => $hasilFilter 
+        ]);
+        return $pdf->download('laporan.pdf');
+    }
+
+    public function exportpdf()
+    {
+        $data = Product::all();
+        return view('cetak-laporan');
+        $pdf = PDF::loadView('cetak-laporan',['data' => $data]);
+        return $pdf->download('user.pdf');
+        # code...
     }
 }

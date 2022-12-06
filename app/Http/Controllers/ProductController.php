@@ -164,16 +164,13 @@ class ProductController extends Controller
         return view('index', [
             'products' => Product::all()
         ]);
-        // return view('$_COOKIE', [
-        //                 'dataKaryawan' => Karyawan::get()
-        //             ]);
     }
 
     public function exportpdf()
     {
         $data = Product::all();
         
-        $pdf = PDF::loadView('cetak',['data' => $data]);
+        $pdf = PDF::loadView('cetak-laporan',['data' => $data]);
         return $pdf->download('user.pdf');
         # code...
     }
