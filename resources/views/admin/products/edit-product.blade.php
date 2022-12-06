@@ -39,24 +39,24 @@
                                             <div class="form-group">
                                                 <label for="warna">Warna</label>
                                                 <input type="text" class="form-control" name="warna" id="warna" value="{{ old('warna', $produk->warna) }}" disabled>
-                                                <select name="ukuran" id="" class="form-control">
+                                                {{-- <select name="ukuran" id="" class="form-control">
                                                     <option value="none" selected>--- Pilih Warna ---</option>
                                                     @foreach ($listwarna as $warna)
                                                         <option value="{{ $warna }}">{{ $warna }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="ukuran">Ukuran</label>
                                                 <input type="text" class="form-control" name="ukuran" id="ukuran" value="{{ old('ukuran',  $produk->ukuran) }}" disabled>
-                                                <select name="ukuran" id="" class="form-control">
+                                                {{-- <select name="ukuran" id="" class="form-control">
                                                     <option value="none" selected>--- Pilih Ukuran ---</option>
                                                     @foreach ($listukuran as $ukuran)
                                                         <option value="{{ $ukuran }}">{{ $ukuran }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col">

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Exists;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ProductController extends Controller
 {
@@ -36,6 +40,7 @@ class ProductController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect('/dashboard');
         }
+        $product = ['Jeans','Hoodie','Jacket','Polo Shirt'];
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
@@ -43,6 +48,7 @@ class ProductController extends Controller
         }
         return view('admin.products.create-product',[
             'title'         => 'Tambah Stok Barang',
+            'products'      => $product,
             'listwarna'     => $warna,
             'listukuran'    => $ukuran
         ]);
@@ -57,7 +63,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // $this->authorize('tambah barang');
-        
+        $exist = Product::query()
+            ->where('nama_produk','=', $request->input('nama_produk'))
+            ->where('warna','=',  $request->input('warna'))
+            ->where('ukuran','=', $request->input('ukuran'))->get();
+        // dd($exist);
+        if ($exist->isNotEmpty()) {
+            return back();
+        }
         Product::create([
             'nama_produk'   => $request->input('nama_produk'),
             'warna'         => $request->input('warna'),

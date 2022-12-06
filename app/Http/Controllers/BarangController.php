@@ -40,7 +40,7 @@ class BarangController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->back();
         }
-
+        
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 

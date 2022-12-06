@@ -26,7 +26,13 @@
                                 <div class="col-lg-8">
                                     <div class="form-group">
                                         <label for="nama_produk">Barang</label>
-                                        <input type="text" class="form-control" name="nama_produk" id="nama_produk">
+                                        {{-- <input type="text" class="form-control" name="nama_produk" id="nama_produk"> --}}
+                                        <select name="nama_produk" id="" class="form-control">
+                                            <option value="none" selected>--- Pilih Barang ---</option>
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product }}">{{ $product }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
