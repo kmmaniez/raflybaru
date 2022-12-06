@@ -35,7 +35,6 @@
                                     <form action="/supplier/{{ $data->id }}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <a class="btn btn-sm btn-primary" href="{{ route('supplier.edit', $data) }}">Edit</a>
                                         <button class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
                                 </td>

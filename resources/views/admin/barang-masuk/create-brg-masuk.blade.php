@@ -40,7 +40,7 @@
                                         <select name="id_barang" id="" class="form-control">
                                             <option value="none" selected>--- Pilih Barang ---</option>
                                             @foreach ($products as $product)
-                                                <option value="{{ $product }}">{{ $product }}</option>
+                                                <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                             @endforeach
                                         </select> 
                                     </div>

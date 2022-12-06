@@ -57,7 +57,7 @@ class BarangController extends Controller
         
         return view('admin.barang-masuk.create-brg-masuk', [
             'title'         => 'Tambah Barang Masuk',
-            'products'      => $product,
+            'products'      => Product::all(),
             'supplier'      => Supplier::all(),
             'listukuran'    => $ukuran,
             'listwarna'     => $warna
