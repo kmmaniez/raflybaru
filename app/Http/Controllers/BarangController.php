@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BarangKeluar;
 use App\Models\BarangMasuk;
+use App\Models\MasterProduk;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Supplier;
@@ -39,16 +40,6 @@ class BarangController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->back();
         }
-        $product = [
-            'Hem Pendek',
-            'Hem Panjang',
-            'Celana Pendek',
-            'Celana Panjang',
-            'Rok Plisir',
-            'Rok TP',
-            'Celana Kempol',
-            'Hem Pramuka'
-        ];
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
@@ -57,7 +48,7 @@ class BarangController extends Controller
         
         return view('admin.barang-masuk.create-brg-masuk', [
             'title'         => 'Tambah Barang Masuk',
-            'products'      => Product::all(),
+            'products'      => MasterProduk::all(),
             'supplier'      => Supplier::all(),
             'listukuran'    => $ukuran,
             'listwarna'     => $warna
@@ -83,26 +74,36 @@ class BarangController extends Controller
     
     public function store(Request $request) // SIMPAN BARANG MASUK
     {
-        $id_barang      = $request->input('id_barang');
-        $inputStokBaru  = $request->input('stok');
-        $stokLama       = 0;
-
-        $stokNow        = Product::query()->where('id','=',$id_barang)->get();
-        foreach ($stokNow as $key) {
-            $stokLama   = $key["stok"];
+        // dd($request);
+        $id_barang      = $request->input('id_master');
+        $warna          = $request->input('warna');
+        $ukuran         = $request->input('ukuran');
+        $stokbaru       = $request->input('stok');
+        $listProduk     = Product::query()
+                            ->where('id_master','=',$id_barang)
+                            ->where('warna','=',$warna)
+                            ->where('ukuran','=',$ukuran)->get();
+        $stoklama       = 0;
+        foreach ($listProduk as $key) {
+            $stoklama   = $key["stok"];
         }
-        $stokbaru       = $stokLama + $inputStokBaru;
+        $hasilstokbaru       = $stoklama + $stokbaru;
 
+        // cek produk kalau ada data, kalau tidak kembali
+        if ($listProduk->isEmpty()) return back(); 
+        
+        // bikin barang masuk
         BarangMasuk::create([
+            'id_master'     => $id_barang,
             'nama_supplier' => $request->input('nama_supplier'),
-            'id_barang'     => $id_barang,
             'warna'         => $request->input('warna'),
             'ukuran'        => $request->input('ukuran'),
-            'stok'          => $inputStokBaru,
+            'stok'          => $stokbaru,
             'tgl_masuk'     => $request->input('tgl_masuk')    
         ]);
-        Product::firstWhere('id',$id_barang)->update([
-            'stok'          => $stokbaru
+        // update stok produk dari barang masuk
+        Product::firstWhere('id_master',$id_barang)->update([
+            'stok'          => $hasilstokbaru
         ]);
         
         return redirect('/barang-masuk');
@@ -201,8 +202,29 @@ class BarangController extends Controller
     
     public function destroy(BarangMasuk $barang_masuk) // HAPUS BARANG MASUK
     {
-        // $this->authorize('tambah barang');
-        
+        $id_master      = $barang_masuk->id_master;
+        $warna          = $barang_masuk->warna;
+        $ukuran         = $barang_masuk->ukuran;
+        $stoksekarang   = $barang_masuk->stok;
+
+        $Produk         = Product::query()
+                            ->where('id_master','=',$id_master)
+                            ->where('warna','=',$warna)
+                            ->where('ukuran','=',$ukuran)->get();
+        // die;
+        // echo $Produk[0]["stok"];
+        // die;
+        $stokLama = 0;
+        foreach ($Produk as $key) {
+            echo $key. '<br>';
+            $stokLama = $key['stok'];
+        }
+        $updateStok = $stokLama - $stoksekarang;
+
+        Product::firstWhere('id_master',$id_master)->update([
+            'stok'          => $updateStok
+        ]);
+    
         BarangMasuk::destroy($barang_masuk->id);
         return redirect('/barang-masuk');
     }

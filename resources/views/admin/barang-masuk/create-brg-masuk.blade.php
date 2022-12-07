@@ -36,8 +36,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="id_barang">Nama Barang</label>
-                                        <select name="id_barang" id="" class="form-control">
+                                        <label for="id_master">Nama Barang</label>
+                                        <select name="id_master" id="" class="form-control">
                                             <option value="none" selected>--- Pilih Barang ---</option>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>

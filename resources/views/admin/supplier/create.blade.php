@@ -30,8 +30,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="nama_supplier">Nomor Telepon</label>
-                                        <input type="text" class="form-control" name="nama_supplier" id="nama_supplier">
+                                        <label for="telepon">Nomor Telepon</label>
+                                        <input type="tel" class="form-control" name="telepon" id="telepon">
                                     </div>
                                 </div>
                             </div>

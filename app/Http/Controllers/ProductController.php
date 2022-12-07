@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterProduk;
 use App\Models\Product;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // dd(MasterProduk::all());
         return view('admin.products.index', [
             'title'     => 'Data Barang',
             'produk'    => Product::all()
@@ -41,16 +43,16 @@ class ProductController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect('/dashboard');
         }
-        $product = [
-            'Hem Pendek',
-            'Hem Panjang',
-            'Celana Pendek',
-            'Celana Panjang',
-            'Rok Plisir',
-            'Rok TP',
-            'Celana Kempol',
-            'Hem Pramuka'
-        ];
+        // $product = [
+        //     'Hem Pendek',
+        //     'Hem Panjang',
+        //     'Celana Pendek',
+        //     'Celana Panjang',
+        //     'Rok Plisir',
+        //     'Rok TP',
+        //     'Celana Kempol',
+        //     'Hem Pramuka'
+        // ];
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
@@ -58,7 +60,7 @@ class ProductController extends Controller
         }
         return view('admin.products.create-product',[
             'title'         => 'Tambah Stok Barang',
-            'products'      => $product,
+            'products'      => MasterProduk::all(),
             'listwarna'     => $warna,
             'listukuran'    => $ukuran
         ]);
@@ -72,17 +74,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         // $this->authorize('tambah barang');
-        $exist = Product::query()
-            ->where('nama_produk','=', $request->input('nama_produk'))
-            ->where('warna','=',  $request->input('warna'))
-            ->where('ukuran','=', $request->input('ukuran'))->get();
-        // dd($exist);
-        if ($exist->isNotEmpty()) {
-            return back();
-        }
+        // $exist = Product::query()
+        //     ->where('nama_produk','=', $request->input('nama_produk'))
+        //     ->where('warna','=',  $request->input('warna'))
+        //     ->where('ukuran','=', $request->input('ukuran'))->get();
+        // if ($exist->isNotEmpty()) {
+        //     return back();
+        // }
         Product::create([
-            'nama_produk'   => $request->input('nama_produk'),
+            'id_master'     => $request->input('id_master'),
             'warna'         => $request->input('warna'),
             'ukuran'        => $request->input('ukuran'),
             'stok'          => $request->input('stok')

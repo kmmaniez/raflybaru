@@ -22,7 +22,8 @@
                         <thead>
                             <tr>
                                 <th>Nomor</th>
-                                <th>Nama Barang</th>
+                                <th>Nama Supplier</th>
+                                <th>Telepon</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->nama }}</td>
+                                <td>{{ $data->telepon }}</td>
                                 <td>
                                     <form action="/supplier/{{ $data->id }}" method="post">
                                         @csrf

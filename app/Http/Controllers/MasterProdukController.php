@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Supplier;
+use App\Models\MasterProduk;
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class MasterProdukController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +14,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $d = Product::all();
-        dd($d);
-        return view('admin.supplier.index', [
-            'title'     => 'Data Supplier',
-            'supplier'  => Supplier::all()
-        ]);
+        //
     }
 
     /**
@@ -30,9 +24,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('admin.supplier.create', [
-            'title' => 'Tambah Data Supplier'
-        ]);
+        //
     }
 
     /**
@@ -43,21 +35,16 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        Supplier::create([
-            'nama'      => $request->input('nama_supplier'),
-            'telepon'   => $request->input('telepon')
-        ]);
-        return redirect('/supplier');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\MasterProduk  $masterProduk
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(MasterProduk $masterProduk)
     {
         //
     }
@@ -65,10 +52,10 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\MasterProduk  $masterProduk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit(MasterProduk $masterProduk)
     {
         //
     }
@@ -77,10 +64,10 @@ class SupplierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\MasterProduk  $masterProduk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, MasterProduk $masterProduk)
     {
         //
     }
@@ -88,12 +75,11 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Supplier  $supplier
+     * @param  \App\Models\MasterProduk  $masterProduk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(MasterProduk $masterProduk)
     {
-        Supplier::destroy($supplier->id);
-        return redirect(route('supplier.index'));
+        //
     }
 }
