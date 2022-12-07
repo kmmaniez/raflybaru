@@ -278,6 +278,7 @@ class BarangController extends Controller
                 ->where('tgl_masuk','>=', $startDate)
                 ->where('tgl_masuk','<=', $endDate)
                 ->get();
+
             return view('admin.laporan-masuk.index',[
                 'title'         => 'Laporan Barang Masuk',
                 'lapmasuk'      => $hasilFilter,
@@ -302,8 +303,8 @@ class BarangController extends Controller
 
         if ($request->post()) {
             $hasilFilter = BarangKeluar::query()
-                ->where('tgl_masuk','>=', $startDate)
-                ->where('tgl_masuk','<=', $endDate)
+                ->where('tgl_keluar','>=', $startDate)
+                ->where('tgl_keluar','<=', $endDate)
                 ->get();
             return view('admin.laporan-keluar.index',[
                 'title'         => 'Laporan Barang Keluar',
@@ -330,13 +331,13 @@ class BarangController extends Controller
         $startDate      = $request->input('startdate');
         $endDate        = $request->input('enddate');
         $hasilFilter    = BarangMasuk::query()
-                            ->where('tgl_masuk','>=', '2022-12-06')
-                            ->where('tgl_masuk','<=', '2022-12-09')
+                            ->where('tgl_masuk','>=', $startDate)
+                            ->where('tgl_masuk','<=', $endDate)
                             ->get();
-        $pdf    = PDF::loadView('cetak-laporan',[
+        $pdf    = PDF::loadView('cetak-lapmasuk',[
             'data'  => $hasilFilter 
         ]);
-        return $pdf->download('laporan.pdf');
+        return $pdf->download('laporan-masuk.pdf');
     }
     
     public function LapkeluarexportToPDF(Request $request)
@@ -345,14 +346,14 @@ class BarangController extends Controller
         // dd($request);
         $startDate      = $request->input('startdate');
         $endDate        = $request->input('enddate');
-        $hasilFilter    = BarangMasuk::query()
-                            ->where('tgl_masuk','>=', '2022-12-06')
-                            ->where('tgl_masuk','<=', '2022-12-09')
+        $hasilFilter    = BarangKeluar::query()
+                            ->where('tgl_keluar','>=', $startDate)
+                            ->where('tgl_keluar','<=', $endDate)
                             ->get();
-        $pdf    = PDF::loadView('cetak-laporan',[
+        $pdf    = PDF::loadView('cetak-lapkeluar',[
             'data'  => $hasilFilter 
         ]);
-        return $pdf->download('laporan.pdf');
+        return $pdf->download('laporan-keluar.pdf');
     }
 
 }
