@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="stok">Jumlah</label>
+                                        <label for="stok">Stok</label>
                                         <input type="number" class="form-control" name="stok" id="stok">
                                     </div>
                                 </div>

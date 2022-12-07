@@ -40,7 +40,6 @@ class DatabaseSeeder extends Seeder
             'Hem Pramuka'
         ];
         for ($i=0; $i < count($product); $i++) { 
-            # code...
             \App\Models\MasterProduk::factory()->create([
                 'nama_produk' => $product[$i]
             ]);

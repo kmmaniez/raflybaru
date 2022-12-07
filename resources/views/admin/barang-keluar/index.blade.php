@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->nama_bgudang }}</td>
-                                <td>{{ $data->product->nama_produk }}</td>
+                                <td>{{ $data->masterproduk->nama_produk }}</td>
                                 <td>{{ $data->warna }}</td>
                                 <td>{{ $data->ukuran }}</td>
                                 <td>{{ $data->stok }}</td>
@@ -48,7 +48,6 @@
                                     <form action="/barang-keluar/{{ $data->id }}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <a class="btn btn-sm btn-primary" href="/barang-keluar/{{ $data->id }}/edit">Edit</a>
                                         <button class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
                                 </td>

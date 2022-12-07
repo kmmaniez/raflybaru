@@ -23,7 +23,7 @@
                         <form action="{{ route('products.store') }}" method="post">
                             @csrf
                             <div class="row d-block">
-                                <div class="col-lg-8">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="id_master">Barang</label>
                                         <select name="id_master" id="" class="form-control">

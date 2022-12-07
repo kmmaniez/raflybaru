@@ -10,7 +10,7 @@ class BarangKeluar extends Model
     use HasFactory;
     protected $table = 'barang_keluar';
     protected $fillable = [
-        'id_barang',
+        'id_master',
         'nama_bgudang',
         'warna',
         'ukuran',
@@ -19,9 +19,9 @@ class BarangKeluar extends Model
     ];
 
     
-    public function product()
+    public function masterproduk()
     {
-        return $this->belongsTo(Product::class, 'id_barang');
+        return $this->belongsTo(MasterProduk::class, 'id_master');
     }
 
     public function supplier()

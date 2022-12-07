@@ -36,8 +36,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->masterproduk->nama_produk }}</td>
                                 <td>{{ $data->warna }}</td>
-                                <td>{{ $data->ukuran }}</td>
-                                <td>{{ $data->stok }}</td>
+                                <td><span class="badge badge-danger px-2 py-2">{{ $data->ukuran }}</span></td>
+                                <td><span class="badge badge-primary px-2 py-2">{{ $data->stok }} PCS</span></td>
                                 {{-- <td>
                                     <form action="/products/{{ $data->id }}" method="post">
                                         @csrf

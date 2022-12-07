@@ -28,14 +28,14 @@
 
             <li class="nav-item {{ (request()->is('supplier*')) ? 'active' : '' }}">
                 <a class="nav-link" href="/supplier">
-                    <i class="fas fa-fw fa-user-plus"></i>
+                    <i class="fas fa-fw fa-user"></i>
                     <span>Data Supplier</span></a>
             </li>
             
             <li class="nav-item {{ (request()->is('products*')) ? 'active' : '' }}">
                 <a class="nav-link" href="/products">
                     <i class="fas fa-fw fa-list"></i>
-                    <span>Data Products</span></a>
+                    <span>Data Barang</span></a>
             </li>
             
             @if (auth()->user()->is_admin)

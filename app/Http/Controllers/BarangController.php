@@ -57,7 +57,6 @@ class BarangController extends Controller
 
     public function create_brg_keluar()
     {
-        // $this->authorize('tambah barang');
         $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
@@ -65,7 +64,7 @@ class BarangController extends Controller
         }
         return view('admin.barang-keluar.create-brg-keluar', [
             'title'         => 'Tambah Barang Keluar',
-            'products'      => Product::all(),
+            'products'      => MasterProduk::all(),
             'listukuran'    => $ukuran,
             'listwarna'     => $warna
         ]);
@@ -74,72 +73,85 @@ class BarangController extends Controller
     
     public function store(Request $request) // SIMPAN BARANG MASUK
     {
-        // dd($request);
         $id_barang      = $request->input('id_master');
         $warna          = $request->input('warna');
         $ukuran         = $request->input('ukuran');
         $stokbaru       = $request->input('stok');
-        $listProduk     = Product::query()
+
+        $listproduk     = Product::query()
                             ->where('id_master','=',$id_barang)
                             ->where('warna','=',$warna)
                             ->where('ukuran','=',$ukuran)->get();
-        $stoklama       = 0;
-        foreach ($listProduk as $key) {
-            $stoklama   = $key["stok"];
-        }
-        $hasilstokbaru       = $stoklama + $stokbaru;
-
-        // cek produk kalau ada data, kalau tidak kembali
-        if ($listProduk->isEmpty()) return back(); 
+        if ($listproduk->isEmpty()) echo 'he';
         
+        // cek produk kalau ada data, kalau tidak kembali
+        if ($listproduk->isEmpty()) return back(); 
+
+        $stoklama       = $listproduk[0]["stok"]; // ambil stok lama
+        $hasilstokbaru  = $stoklama + $stokbaru; // tambah stok lama dgn inputan
+
         // bikin barang masuk
         BarangMasuk::create([
             'id_master'     => $id_barang,
             'nama_supplier' => $request->input('nama_supplier'),
-            'warna'         => $request->input('warna'),
-            'ukuran'        => $request->input('ukuran'),
+            'warna'         => $warna,
+            'ukuran'        => $ukuran,
             'stok'          => $stokbaru,
             'tgl_masuk'     => $request->input('tgl_masuk')    
         ]);
+
         // update stok produk dari barang masuk
-        Product::firstWhere('id_master',$id_barang)->update([
-            'stok'          => $hasilstokbaru
+        Product::query()
+                ->where('id_master','=',$id_barang)
+                ->where('warna','=',$warna)
+                ->where('ukuran','=',$ukuran)
+                ->update([
+                    'stok'  => $hasilstokbaru
         ]);
-        
         return redirect('/barang-masuk');
     }
 
     public function store_brg_keluar(Request $request)
     {
-        // $this->authorize('tambah barang');
-        $id_barang      = $request->input('id_barang');
-        $inputStokBaru  = $request->input('stok');
-        $stokLama       = 0;
+        $id_barang      = $request->input('id_master');
+        $stokbaru       = $request->input('stok');
+        $warna          = $request->input('warna');
+        $ukuran         = $request->input('ukuran');
 
-        $stokNow        = Product::query()->where('id','=',$id_barang)->get();
-        foreach ($stokNow as $key) {
-            $stokLama   = $key["stok"];
-        }
-        $stokbaru       = $stokLama - $inputStokBaru;
-        if ($stokbaru < 0) return back();
+        $listproduct    = Product::query()
+                            ->where('id_master','=',$id_barang)
+                            ->where('warna','=',$warna)
+                            ->where('ukuran','=',$ukuran)->get();
+        
+        // cek produk kalau ada data, kalau tidak kembali
+        if ($listproduct->isEmpty()) return back(); 
+        
+        $stoklama       = $listproduct[0]["stok"];
+        $hasilstok      = $stoklama - $stokbaru;
+        
+        // cek hasil pengurangan stok lama dan baru, jika minus kembali
+        if ($hasilstok < 0) return back();
+        // cek hasil input baru jika lebih besar dari stok, kembali
+        if ($stokbaru > $stoklama) return back();
 
         BarangKeluar::create([
+            'id_master'     => $id_barang,
             'nama_bgudang'  => $request->input('nama_bgudang'),
-            'id_barang'     => $request->input('id_barang'),
-            'warna'         => $request->input('warna'),
-            'ukuran'        => $request->input('ukuran'),
-            'stok'          => $request->input('stok'),
+            'warna'         => $warna,
+            'ukuran'        => $ukuran,
+            'stok'          => $stokbaru,
             'tgl_keluar'    => $request->input('tgl_keluar')    
         ]);
-        Product::firstWhere('id',$id_barang)->update([
-            'stok'          => $stokbaru
+
+        Product::query()
+                ->where('id_master','=',$id_barang)
+                ->where('warna','=',$warna)
+                ->where('ukuran','=',$ukuran)
+                ->update([
+                    'stok'  => $hasilstok
         ]);
-        // DB::table('products')->where('id','=',$id_barang)->update([
-        //     'stok'          => $stokbaru
-        // ]);
         return redirect('/barang-keluar');
     }
-
     
     // public function show($id)
     // {
@@ -207,37 +219,56 @@ class BarangController extends Controller
         $ukuran         = $barang_masuk->ukuran;
         $stoksekarang   = $barang_masuk->stok;
 
-        $Produk         = Product::query()
+        $listproduk     = Product::query()
                             ->where('id_master','=',$id_master)
                             ->where('warna','=',$warna)
                             ->where('ukuran','=',$ukuran)->get();
-        // die;
-        // echo $Produk[0]["stok"];
-        // die;
-        $stokLama = 0;
-        foreach ($Produk as $key) {
-            echo $key. '<br>';
-            $stokLama = $key['stok'];
-        }
-        $updateStok = $stokLama - $stoksekarang;
 
-        Product::firstWhere('id_master',$id_master)->update([
-            'stok'          => $updateStok
+        $stoklama       = $listproduk[0]["stok"];
+        $hasilstok      = $stoklama - $stoksekarang;
+
+        // // jika hasil delete
+        // if ($hasilstok < 0 ) return back();
+
+        Product::query()
+                ->where('id_master','=',$id_master)
+                ->where('warna','=',$warna)
+                ->where('ukuran','=',$ukuran)
+                ->update([
+                    'stok'  => $hasilstok
         ]);
-    
         BarangMasuk::destroy($barang_masuk->id);
         return redirect('/barang-masuk');
     }
 
-    public function destroy_brg_keluar(BarangKeluar $barang_keluar)
+    public function destroy_brg_keluar(BarangKeluar $barang_keluar) // HAPUS BARANG KELUAR
     {
-        // $this->authorize('tambah barang');
-        
+        $id_master      = $barang_keluar->id_master;
+        $warna          = $barang_keluar->warna;
+        $ukuran         = $barang_keluar->ukuran;
+        $stoksekarang   = $barang_keluar->stok;
+
+        $listproduk     = Product::query()
+                            ->where('id_master','=',$id_master)
+                            ->where('warna','=',$warna)
+                            ->where('ukuran','=',$ukuran)->get();
+
+        $stoklama       = $listproduk[0]["stok"];
+        $hasilstok      = $stoksekarang + $stoklama;
+
+        Product::query()
+                ->where('id_master','=',$id_master)
+                ->where('warna','=',$warna)
+                ->where('ukuran','=',$ukuran)
+                ->update([
+                    'stok'  => $hasilstok
+        ]);
         BarangKeluar::destroy($barang_keluar->id);
         return redirect('/barang-keluar');
     }
 
-    public function filterByDate(Request $request)
+    /* FILTER LAPORAN BY DATE */
+    public function LapmasukfilterByDate(Request $request)
     { 
         $startDate  = $request->input('start');
         $endDate    = $request->input('end');
@@ -263,8 +294,52 @@ class BarangController extends Controller
             'lapmasuk'      => BarangMasuk::all()
         ]);
     }
+    
+    public function LapkeluarfilterByDate(Request $request)
+    { 
+        $startDate  = $request->input('start');
+        $endDate    = $request->input('end');
 
-    public function exportToPDF(Request $request)
+        if ($request->post()) {
+            $hasilFilter = BarangKeluar::query()
+                ->where('tgl_masuk','>=', $startDate)
+                ->where('tgl_masuk','<=', $endDate)
+                ->get();
+            return view('admin.laporan-keluar.index',[
+                'title'         => 'Laporan Barang Keluar',
+                'lapkeluar'     => $hasilFilter,
+                'status'        => true,
+                'startdate'     => $startDate,
+                'enddate'       => $endDate
+            ]);
+        }
+        return view('admin.laporan-keluar.index',[
+            'title'         => 'Laporan Barang Keluar',
+            'status'        => false,
+            'startdate'     => $startDate,
+            'enddate'       => $endDate,
+            'lapkeluar'     => BarangKeluar::all()
+        ]);
+    }
+
+    /* EXPORT PDF */
+    public function LapmasukexportToPDF(Request $request)
+    {
+        if($request->is_null) return redirect('/products');
+        // dd($request);
+        $startDate      = $request->input('startdate');
+        $endDate        = $request->input('enddate');
+        $hasilFilter    = BarangMasuk::query()
+                            ->where('tgl_masuk','>=', '2022-12-06')
+                            ->where('tgl_masuk','<=', '2022-12-09')
+                            ->get();
+        $pdf    = PDF::loadView('cetak-laporan',[
+            'data'  => $hasilFilter 
+        ]);
+        return $pdf->download('laporan.pdf');
+    }
+    
+    public function LapkeluarexportToPDF(Request $request)
     {
         if($request->is_null) return redirect('/products');
         // dd($request);
@@ -280,12 +355,4 @@ class BarangController extends Controller
         return $pdf->download('laporan.pdf');
     }
 
-    public function exportpdf()
-    {
-        $data = Product::all();
-        return view('cetak-laporan');
-        $pdf = PDF::loadView('cetak-laporan',['data' => $data]);
-        return $pdf->download('user.pdf');
-        # code...
-    }
 }
