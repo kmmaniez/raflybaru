@@ -23,14 +23,13 @@
                         <form action="{{ route('products.store') }}" method="post">
                             @csrf
                             <div class="row d-block">
-                                <div class="col-lg-8">
+                                <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="nama_produk">Barang</label>
-                                        {{-- <input type="text" class="form-control" name="nama_produk" id="nama_produk"> --}}
-                                        <select name="nama_produk" id="" class="form-control">
+                                        <label for="id_master">Barang</label>
+                                        <select name="id_master" id="" class="form-control">
                                             <option value="none" selected>--- Pilih Barang ---</option>
                                             @foreach ($products as $product)
-                                                <option value="{{ $product }}">{{ $product }}</option>
+                                                <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                             @endforeach
                                         </select>
                                     </div>

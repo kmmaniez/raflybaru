@@ -35,14 +35,13 @@
                         </form>
                     </div>
                     <div class="col-lg-2">
-                        <form action="/export-pdf" method="post">
+                        <form action="/lapmasuk-exportpdf" method="post">
                             @csrf
                             <input type="hidden" name="startdate" value="{{ $startdate ? $startdate : '' }}">
                             <input type="hidden" name="enddate" value="{{ $enddate ? $enddate : ''  }}">
                             @if ($status === true)
                             <label for="end" class="d-block" style="visibility: hidden">Export </label>
                             <button class="btn btn-md btn-success text-decoration-none"><i class="fas fa-fw fa-file-pdf"></i> Export Data</button>
-                            {{-- <a href="/export-pdf" class="btn btn-md btn-success text-decoration-none"><i class="fas fa-fw fa-file-pdf"></i> Export Data</a> --}}
                             @endif
                         </form>
                     </div>
@@ -65,7 +64,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->supplier->nama }}</td>
-                                <td>{{ $data->product->nama_produk }}</td>
+                                <td>{{ $data->masterproduk->nama_produk }}</td>
                                 <td>{{ $data->warna }}</td>
                                 <td>{{ $data->ukuran }}</td>
                                 <td>{{ $data->stok }}</td>

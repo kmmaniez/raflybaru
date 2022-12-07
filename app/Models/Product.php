@@ -9,9 +9,14 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama_produk',
+        'id_master',
         'warna',
         'ukuran',
         'stok',
     ];
+
+    public function masterproduk()
+    {
+        return $this->belongsTo(MasterProduk::class, 'id_master');
+    }
 }

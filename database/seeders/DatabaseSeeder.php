@@ -28,5 +28,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'owner@mail.com',
             'is_admin' => false
         ]);
+
+        $product = [
+            'Hem Pendek',
+            'Hem Panjang',
+            'Celana Pendek',
+            'Celana Panjang',
+            'Rok Plisir',
+            'Rok TP',
+            'Celana Kempol',
+            'Hem Pramuka'
+        ];
+        for ($i=0; $i < count($product); $i++) { 
+            \App\Models\MasterProduk::factory()->create([
+                'nama_produk' => $product[$i]
+            ]);
+        }
     }
 }

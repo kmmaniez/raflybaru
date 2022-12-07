@@ -32,7 +32,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $laporan->supplier->nama }}</td>
-                <td>{{ $laporan->product->nama_produk }}</td>
+                <td>{{ $laporan->masterproduk->nama_produk }}</td>
                 <td>{{ $laporan->warna }}</td>
                 <td>{{ $laporan->ukuran }}</td>
                 <td>{{ $laporan->stok }}</td>

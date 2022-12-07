@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_produk');
+            $table->foreignId('id_master')->references('id')->on('master_produks')->onDelete('cascade');
             $table->string('warna');
             $table->string('ukuran');
             $table->integer('stok');
@@ -33,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('products');
     }
 };
+// database/migrations/2022_12_06_133219_create_master_produks_table.php
