@@ -4,7 +4,7 @@
     
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Halaman {{ $title }}</h1>
+        <h1 class="h3 mb-4 text-gray-800">Halamans {{ $title }}</h1>
 
         <!-- Content Row -->
 
@@ -25,7 +25,6 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="nama_supplier">Nama Supplier</label>
-                                        {{-- <input type="text" name="nama_supplier" id="nama_supplier" class="form-control"> --}}
                                         <select name="nama_supplier" id="" class="form-control">
                                             <option value="none" selected>--- Pilih Supplier ---</option>
                                             @foreach ($supplier as $sp)
@@ -36,9 +35,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="id_master">Nama Barang</label>
+                                        <label for="id_master">Nama Kain</label>
                                         <select name="id_master" id="" class="form-control">
-                                            <option value="none" selected>--- Pilih Barang ---</option>
+                                            <option value="none" selected>--- Pilih Kain ---</option>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                             @endforeach
@@ -58,13 +57,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="ukuran">Ukuran</label>
-                                        <select name="ukuran" id="" class="form-control">
-                                            <option value="none" selected>--- Pilih Ukuran ---</option>
-                                            @foreach ($listukuran as $ukuran)
-                                                <option value="{{ $ukuran }}">{{ $ukuran }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="stok">Yard</label>
+                                        <input type="number" min="0" class="form-control" name="stok" id="stok">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
