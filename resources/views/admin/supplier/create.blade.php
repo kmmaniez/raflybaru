@@ -35,6 +35,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="alamat_supplier">Alamat Supplier</label>
+                                <input type="text" class="form-control" name="alamat_supplier" id="alamat_supplier">
+                            </div>
                             <button class="btn btn-primary btn-md">Simpan data</button>
                         </form>
                     </div>
