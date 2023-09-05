@@ -44,6 +44,12 @@
                     <i class="fas fa-fw fa-sign-in-alt"></i>
                     <span>Barang Masuk</span></a>
             </li>
+
+            <li class="nav-item {{ (request()->is('barang-retur*')) ? 'active' : '' }}">
+                <a class="nav-link" href="/barang-retur">
+                    <i class="fas fa-fw fa-arrow-left"></i>
+                    <span>Data Barang Retur</span></a>
+            </li>
             
             <li class="nav-item {{ (request()->is('barang-keluar*')) ? 'active' : '' }}">
                 <a class="nav-link" href="/barang-keluar">
