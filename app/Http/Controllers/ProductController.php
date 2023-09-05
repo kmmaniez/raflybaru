@@ -27,7 +27,9 @@ class ProductController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect('/dashboard');
         }
-        $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
+        $warna = ['coklat','merah','putih','ungu','biru','kuning','hijau','abu','hitam'];
+
+        // $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
@@ -59,14 +61,11 @@ class ProductController extends Controller
         return redirect('/products');
     }
 
-    // public function show(Product $product)
-    // {
-    //     //
-    // }
-
     public function edit(Product $product)
     {   
-        $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
+        $warna = ['coklat','merah','putih','ungu','biru','kuning','hijau','abu','hitam'];
+
+        // $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
