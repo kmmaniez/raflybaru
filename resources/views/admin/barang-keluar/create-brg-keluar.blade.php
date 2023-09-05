@@ -31,9 +31,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="id_master">Nama Barang</label>
+                                        <label for="id_master">Nama Kain</label>
                                         <select name="id_master" id="" class="form-control">
-                                            <option value="0" selected>--- Pilih Barang ---</option>
+                                            <option value="0" selected>--- Pilih Kain ---</option>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                             @endforeach
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="ukuran">Ukuran</label>
                                         <select name="ukuran" id="" class="form-control">
                                             <option value="0" selected>--- Pilih Ukuran ---</option>
@@ -60,6 +60,10 @@
                                                 <option value="{{ $ukuran }}">{{ $ukuran }}</option>
                                             @endforeach
                                         </select> 
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label for="stok">Yard</label>
+                                        <input type="number" min="0" class="form-control" name="stok" id="stok">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
