@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangReturController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
@@ -35,6 +36,13 @@ Route::middleware(['auth'])->group(function () {
             'total_brg_keluar'  => BarangKeluar::all()->count(),
             'total_laporan'     => BarangMasuk::all()->count() + BarangKeluar::all()->count()
         ]);
+    });
+
+    /* HEREEE */
+    Route::prefix('barang-retur')->group(function () {
+        
+        Route::get('/',[BarangReturController::class, 'index']);
+        Route::get('/create',[BarangReturController::class, 'create']);
     });
 
     // URL KHUSUS PRODUCTS
