@@ -40,7 +40,8 @@ class BarangController extends Controller
         if (!auth()->user()->is_admin) {
             return redirect()->back();
         }
-        $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
+        $warna = ['coklat','merah','putih','ungu','biru','kuning','hijau','abu','hitam'];
+        // $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
@@ -57,7 +58,9 @@ class BarangController extends Controller
 
     public function create_brg_keluar()
     {
-        $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
+        $warna = ['coklat','merah','putih','ungu','biru','kuning','hijau','abu','hitam'];
+
+        // $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
         $ukuran = [];
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
