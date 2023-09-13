@@ -58,8 +58,8 @@
                                                 </select>
                                             </div> --}}
                                             <div class="form-group">
-                                                <label for="stok">Yard</label>
-                                                <input type="number" min="0" class="form-control" name="stok" id="stok">
+                                                <label for="ukuran">Yard</label>
+                                                <input type="number" min="0" class="form-control" name="ukuran" id="ukuran">
                                             </div>
                                         </div>
                                         <div class="col">
