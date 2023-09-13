@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'ADMIN',
-            'email' => 'admin@mail.com',
+            'email' => 'admin@gmail.com',
             'is_admin' => true
         ]);
         \App\Models\User::factory()->create([
@@ -30,14 +30,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $product = [
-            'Hem Pendek',
-            'Hem Panjang',
-            'Celana Pendek',
-            'Celana Panjang',
-            'Rok Plisir',
-            'Rok TP',
-            'Celana Kempol',
-            'Hem Pramuka'
+            'oxford',
+            'tc',
+            'aliano',
         ];
         for ($i=0; $i < count($product); $i++) { 
             \App\Models\MasterProduk::factory()->create([
