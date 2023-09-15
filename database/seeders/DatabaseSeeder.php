@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
         $product = [
             'oxford',
             'tc',
-            'aliano',
+            'alliano',
+            'cemani'
         ];
         for ($i=0; $i < count($product); $i++) { 
             \App\Models\MasterProduk::factory()->create([
