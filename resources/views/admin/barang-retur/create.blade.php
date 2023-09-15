@@ -26,7 +26,7 @@
                                     <div class="form-group">
                                         <label for="nama_supplier">Nama Supplier</label>
                                         <select name="nama_supplier" id="" class="form-control">
-                                            <option value="none" selected>--- Pilih Supplier ---</option>
+                                            <option value="none" selected>--- Pilih B Gudang ---</option>
                                             {{-- @foreach ($supplier as $sp)
                                                 <option value="{{ $sp->id }}">{{ $sp->nama }}</option>
                                             @endforeach --}}
