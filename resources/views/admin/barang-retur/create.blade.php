@@ -19,24 +19,24 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <form action="{{ route('barang-masuk.store') }}" method="post">
+                        <form action="{{ route('barang-retur.store') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="nama_supplier">Nama Supplier</label>
-                                        <select name="nama_supplier" id="" class="form-control">
+                                        <label for="nama_bgudang">Nama B Gudang</label>
+                                        <select name="nama_bgudang" id="" class="form-control">
                                             <option value="none" selected>--- Pilih B Gudang ---</option>
-                                            {{-- @foreach ($supplier as $sp)
+                                            @foreach ($supplier as $sp)
                                                 <option value="{{ $sp->id }}">{{ $sp->nama }}</option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="id_master">Nama Kain</label>
-                                        <select name="id_master" id="" class="form-control">
+                                        <label for="id_kain">Nama Kain</label>
+                                        <select name="id_kain" id="" class="form-control">
                                             <option value="none" selected>--- Pilih Kain ---</option>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
@@ -57,8 +57,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="stok">Yard</label>
-                                        <input type="number" min="0" class="form-control" name="stok" id="stok">
+                                        <label for="ukuran">Yard</label>
+                                        <input type="number" min="0" class="form-control" name="ukuran" id="ukuran">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
