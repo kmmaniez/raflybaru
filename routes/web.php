@@ -39,18 +39,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     /* HEREEE */
-    Route::prefix('barang-retur')->group(function () {
-        
-        Route::get('/',[BarangReturController::class, 'index']);
-        Route::get('/create',[BarangReturController::class, 'create']);
-    });
+    Route::resource('barang-retur', BarangReturController::class);
 
     // URL KHUSUS PRODUCTS
     Route::resource('products', ProductController::class)
             ->only(['index','create','store','edit','update','destroy']);
     
     // URL KHUSUS BARANG MASUK
-    Route::resource('/barang-masuk', BarangController::class)
+    Route::resource('barang-masuk', BarangController::class)
             ->only(['index','create','store','edit','update','destroy']);
     
     // URL KHUSUS BARANG KELUAR
