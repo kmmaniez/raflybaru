@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_master')->references('id')->on('master_produks')->onDelete('cascade');
             $table->string('warna');
-            $table->string('ukuran');
+            $table->integer('ukuran');
             $table->integer('stok');
             $table->timestamps();
         });
