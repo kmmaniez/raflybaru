@@ -46,6 +46,7 @@ class BarangController extends Controller
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
         }
+        dump(Product::all());
         
         return view('admin.barang-masuk.create-brg-masuk', [
             'title'         => 'Tambah Barang Masuk',
@@ -85,7 +86,7 @@ class BarangController extends Controller
                             ->where('id_master','=',$id_barang)
                             ->where('warna','=',$warna)
                             ->where('ukuran','=',$ukuran)->get();
-        if ($listproduk->isEmpty()) echo 'he';
+        // dd($listproduk, $request->all());
         
         // cek produk kalau ada data, kalau tidak kembali
         if ($listproduk->isEmpty()) return back(); 
