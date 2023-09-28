@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>Nomor</th>
-                                <th>Nama Supplier</th>
+                                <th>Nama B Gudang</th>
                                 <th>Nama Barang</th>
                                 <th>Warna</th>
                                 <th>Ukuran</th>
