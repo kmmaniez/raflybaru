@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangMasuk;
 use App\Models\MasterProduk;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class BarangReturController extends Controller
@@ -30,6 +31,7 @@ class BarangReturController extends Controller
         return view('admin.barang-retur.create',[
             'title'         => 'Tambah Stok Barang Retur',
             'products'      => MasterProduk::all(),
+            'supplier'      => Supplier::all(),
             'listwarna'     => $warna,
             'listukuran'    => $ukuran
         ]);
@@ -37,20 +39,41 @@ class BarangReturController extends Controller
 
     public function store(Request $request)
     {
-        // $chekproduk = Product::query()
-        //                 ->where('id_master','=', $request->input('id_master'))
-        //                 ->where('warna','=', $request->input('warna'))
-        //                 ->where('ukuran','=', $request->input('ukuran'))->get();
+        $id_kain        = $request->input('id_kain');
+        $warna          = $request->input('warna');
+        $yard           = $request->input('ukuran');
+        $stokbaru       = $request->input('stok');
 
-        // jika ada input produk yg sama, maka kembali / gaboleh
-        // if ($chekproduk->isNotEmpty()) return back();
+        $listproduk     = Product::query()
+                            ->where('id_master','=',$id_kain)
+                            ->where('warna','=',$warna)
+                            ->where('ukuran','=',$yard)->get();
 
-        // Product::create([
-        //     'id_master'     => $request->input('id_master'),
-        //     'warna'         => $request->input('warna'),
-        //     'ukuran'        => $request->input('ukuran'),
-        //     'stok'          => $request->input('stok')
-        // ]);
-        return redirect('/products');
+        // dd($listproduk, $request->all());
+        // cek produk kalau ada data, kalau tidak kembali
+        if ($listproduk->isEmpty()) return back(); 
+
+        $stoklama       = $listproduk[0]["stok"]; // ambil stok lama
+        $hasilstokbaru  = $stoklama + $stokbaru; // tambah stok lama dgn inputan
+
+        // bikin barang masuk
+        BarangMasuk::create([
+            'id_master'     => $id_kain,
+            'nama_supplier' => $request->input('nama_bgudang'),
+            'warna'         => $warna,
+            'ukuran'        => $yard,
+            'stok'          => $stokbaru,
+            'tgl_masuk'     => $request->input('tgl_masuk')    
+        ]);
+
+        // update stok produk dari barang masuk
+        Product::query()
+                ->where('id_master','=',$id_kain)
+                ->where('warna','=',$warna)
+                ->where('ukuran','=',$yard)
+                ->update([
+                    'stok'  => $hasilstokbaru
+        ]);
+        return redirect('/barang-retur');
     }
 }
