@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangMasuk;
+use App\Models\BarangRetur;
 use App\Models\MasterProduk;
 use App\Models\Product;
 use App\Models\Supplier;
@@ -14,7 +15,7 @@ class BarangReturController extends Controller
     {
         return view('admin.barang-retur.index', [
             'title'     => 'Data Barang Retur',
-            'barangmasuk'   => BarangMasuk::all()
+            'barangretur'   => BarangRetur::all()
         ]);
     }
 
@@ -41,14 +42,13 @@ class BarangReturController extends Controller
     {
         $id_kain        = $request->input('id_kain');
         $warna          = $request->input('warna');
-        $yard           = $request->input('ukuran');
+        // $yard           = ;
         $stokbaru       = $request->input('stok');
-
+        $yard =  (int) str_replace([' YARD',' yard',' Yard','YARD','yard','Yard'],'', $request->input('yard'));
         $listproduk     = Product::query()
                             ->where('id_master','=',$id_kain)
                             ->where('warna','=',$warna)
                             ->where('ukuran','=',$yard)->get();
-
         // dd($listproduk, $request->all());
         // cek produk kalau ada data, kalau tidak kembali
         if ($listproduk->isEmpty()) return back(); 
@@ -57,11 +57,11 @@ class BarangReturController extends Controller
         $hasilstokbaru  = $stoklama + $stokbaru; // tambah stok lama dgn inputan
 
         // bikin barang masuk
-        BarangMasuk::create([
+        BarangRetur::create([
             'id_master'     => $id_kain,
             'nama_supplier' => $request->input('nama_bgudang'),
             'warna'         => $warna,
-            'ukuran'        => $yard,
+            'yard'        => $yard,
             'stok'          => $stokbaru,
             'tgl_masuk'     => $request->input('tgl_masuk')    
         ]);
