@@ -58,7 +58,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="ukuran">Yard</label>
-                                        <input type="number" min="0" class="form-control" name="ukuran" id="ukuran">
+                                        <input type="text" class="form-control" name="ukuran" id="ukuran">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
