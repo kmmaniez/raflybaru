@@ -12,9 +12,19 @@
         /* border: 2px solid #000; */ 
         /* border: 1px inset #000; */
     }
+    #header{
+        text-align: center;
+        width: 100%;
+        height: max-content;
+    }
 </style>
 <body>
-    <h1>Laporan Masuk</h1>
+    <div id="header">
+        <h1 style="color: red;">CV. PRASETYA</h1>
+        <p>Jl. Slompretan No. 57 Surabaya</p>
+        <p>Telepon (031) 3557777 Hunting  Fax. (031) 3557077</p>
+    </div>
+    <hr>
     <table border="1">
         <thead>
             <tr>
@@ -34,7 +44,7 @@
                 <td>{{ $laporan->supplier->nama }}</td>
                 <td>{{ $laporan->masterproduk->nama_produk }}</td>
                 <td>{{ $laporan->warna }}</td>
-                <td>{{ $laporan->ukuran }}</td>
+                <td>{{ $laporan->ukuran }} YARD</td>
                 <td>{{ $laporan->stok }}</td>
                 <td>{{ $laporan->tgl_masuk }}</td>
             </tr>
