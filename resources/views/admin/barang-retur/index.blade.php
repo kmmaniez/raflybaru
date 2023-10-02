@@ -25,7 +25,7 @@
                                 <th>Nama B Gudang</th>
                                 <th>Nama Barang</th>
                                 <th>Warna</th>
-                                <th>Ukuran</th>
+                                <th>Yard</th>
                                 <th>Stok</th>
                                 <th>Tanggal Masuks</th>
                                 @if(auth()->user()->is_admin)
@@ -34,13 +34,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($barangmasuk as $data)
+                            @forelse ($barangretur as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->supplier->nama }}</td>
                                 <td>{{ $data->masterproduk->nama_produk }}</td>
                                 <td>{{ $data->warna }}</td>
-                                <td>{{ $data->ukuran }}</td>
+                                <td>{{ $data->yard }} YARD</td>
                                 <td>{{ $data->stok }}</td>
                                 <td>{{ $data->tgl_masuk }}</td>
                                 @if(auth()->user()->is_admin)
