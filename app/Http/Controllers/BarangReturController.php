@@ -61,7 +61,7 @@ class BarangReturController extends Controller
             'id_master'     => $id_kain,
             'nama_supplier' => $request->input('nama_bgudang'),
             'warna'         => $warna,
-            'yard'        => $yard,
+            'yard'          => $yard,
             'stok'          => $stokbaru,
             'tgl_masuk'     => $request->input('tgl_masuk')    
         ]);
