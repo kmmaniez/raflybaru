@@ -25,12 +25,14 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="nama_bgudang">Nama B Gudang</label>
-                                        <select name="nama_bgudang" id="" class="form-control">
+                                        <input type="text" class="form-control" name="nama_bgudang" id="nama_bgudang">
+
+                                        {{-- <select name="nama_bgudang" id="" class="form-control">
                                             <option value="none" selected>--- Pilih B Gudang ---</option>
                                             @foreach ($supplier as $sp)
                                                 <option value="{{ $sp->id }}">{{ $sp->nama }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
