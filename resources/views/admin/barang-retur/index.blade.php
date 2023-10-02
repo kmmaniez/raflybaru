@@ -37,7 +37,7 @@
                             @forelse ($barangretur as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->supplier->nama }}</td>
+                                <td>{{ $data->nama_supplier }}</td>
                                 <td>{{ $data->masterproduk->nama_produk }}</td>
                                 <td>{{ $data->warna }}</td>
                                 <td>{{ $data->yard }} YARD</td>
