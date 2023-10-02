@@ -46,7 +46,6 @@ class BarangController extends Controller
         for ($i=2; $i <= 35; $i++) { 
             array_push($ukuran, $i);
         }
-        dump(Product::all());
         
         return view('admin.barang-masuk.create-brg-masuk', [
             'title'         => 'Tambah Barang Masuk',
@@ -79,8 +78,10 @@ class BarangController extends Controller
     {
         $id_barang      = $request->input('id_master');
         $warna          = $request->input('warna');
-        $ukuran         = $request->input('ukuran');
+        // $ukuran         = $request->input('ukuran');
         $stokbaru       = $request->input('stok');
+        $ukuran =  (int) str_replace([' YARD',' yard',' Yard','YARD','yard','Yard'],'', $request->input('ukuran'));
+
 
         $listproduk     = Product::query()
                             ->where('id_master','=',$id_barang)
@@ -120,7 +121,9 @@ class BarangController extends Controller
         $id_barang      = $request->input('id_master');
         $stokbaru       = $request->input('stok');
         $warna          = $request->input('warna');
-        $ukuran         = $request->input('ukuran');
+        // $ukuran         = $request->input('ukuran');
+        $ukuran =  (int) str_replace([' YARD',' yard',' Yard','YARD','yard','Yard'],'', $request->input('ukuran'));
+
 
         $listproduct    = Product::query()
                             ->where('id_master','=',$id_barang)
